@@ -205,8 +205,8 @@ insertArgsToEnv _ _ [] [] _ = do
   updatedEnv <- ask
   return updatedEnv
 
-insertArgsToEnv (Just a) name [] _ _ = throwError $ "Row, col: " ++ show a ++ " Too few arguments: " ++ name
-insertArgsToEnv (Just a) name _ [] _ = throwError $ "Row, col: " ++ show a ++ " Too many arguments: " ++ name
+insertArgsToEnv (Just a) name [] _ _ = throwError $ "Wiersz, kolumna: " ++ show a ++ " Za mało argumentów: " ++ name
+insertArgsToEnv (Just a) name _ [] _ = throwError $ "Wiersz, kolumna: " ++ show a ++ " Za dużo argumentów: " ++ name
 
 -- without reference
 insertArgsToEnv posF name (arg_val : rest_vals) ((Arg pos argType (MIdent argName)) : rest_args) (al : passedLocs) = do --funcEnv = do
