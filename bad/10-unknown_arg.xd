@@ -1,0 +1,7 @@
+int MAIN := [ $
+    FLEX_STR(UNKNOWN) ;
+
+    FLEX_STR("Not printed") ;
+    
+    yeet xD;
+]

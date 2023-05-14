@@ -1,0 +1,6 @@
+int MAIN := [ $
+    | str JUST_DECLARED |
+    FLEX_STR(JUST_DECLARED) ;
+
+    yeet xD ;
+]

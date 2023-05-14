@@ -1,0 +1,173 @@
+-- Types
+Int.        Type    ::= "int" ;
+Str.        Type    ::= "str" ;
+Bool.       Type    ::= "bool" ;
+Void.       Type    ::= "meh" ;
+
+-- token FuncT ({"@"}* {Type} {"@"}* {MIdent}) ;
+
+-- StrEl.      Val   ::=
+{-EStr.       Val     ::= String ;
+ETrue.      Val     ::= "^^" ;
+EFalse      Val     ::= "v.v" ; -}
+
+token MIdent ((digit | upper) (upper | digit | '_')*) ;
+
+{- EZero.      Numb    ::= "xD" ;
+ENumb.      Numb    ::= -}
+
+-- NZero.      NZero ::= "xD" ;
+token Numb  (('x')* {"xD"} ('D')*);
+
+-- ENumb       Val     ::= Numb ;
+
+-- programs ------------------------------------------------
+
+entrypoints Program ;
+
+Program.   Program ::= [TopDef] ;
+
+FnDef.	   TopDef ::= Type MIdent ":=" "[" [Arg] "$" [Stmt] "]" ;
+FnDefRet.  TopDef ::= "@" Type MIdent ":=" "[" [Arg] "$" [Stmt] "]" ;
+
+DeclGlob.  TopDef ::= "|" Type Item "|";
+DeclFInv.  TopDef ::= "|" Type Item ":" [Invar] "|" ;
+
+separator nonempty TopDef "" ;
+
+Arg. 	   Arg ::= Type MIdent ;
+ArgRef.    Arg ::= "&" Type MIdent ;
+ArgFunc.   Arg ::= Type "@" MIdent ;
+ArgFuncF.  Arg ::= "@" Type "@" MIdent ;
+
+separator  Arg " " ;
+
+
+-- statements ----------------------------------------------
+FnStmt.     Stmt ::= Type MIdent ":=" "[" [Arg] "$" [Stmt] "]" ;
+FnRetStmt.  Stmt ::= "@" Type MIdent ":=" "[" [Arg] "$" [Stmt] "]" ;
+
+Decl.       Stmt ::= "|" Type Item "|";
+DeclInv.    Stmt ::= "|" Type Item ":" [Invar] "|" ;
+
+DeclFunc.   Stmt ::= "|" Type "@" MIdent "|" ;
+DeclFunF.   Stmt ::= "|" "@" Type "@" MIdent "|" ;
+
+
+Cannot.      Invar ::= "!(" Expr ")" ;
+Must.        Invar ::= "?(" Expr ")" ;
+separator Invar " " ;
+
+
+NoInit.     Item ::= MIdent;
+Init.       Item ::= MIdent Expr;
+
+-- Block.     Block ::= "{" [Stmt] "}" ;
+
+separator  Stmt "" ;
+
+Empty.     Stmt ::= ";" ;
+
+-- BStmt.     Stmt ::= Block ;
+
+-- separator nonempty Item " " ;
+
+
+DecLVal.    Stmt ::= "|" "#" Type MIdent "#(" [Expr] ")" "|";
+DecLSize.   Stmt ::= "|" "#" Type MIdent "#" Numb "|" ;
+DecLVSize.  Stmt ::= "|" "#" Type MIdent "#" Numb "##" Expr "|";
+
+FreeStmt.    Stmt ::= "<" [Stmt] ">" ;
+
+Ass.       Stmt ::= MIdent ":=" Expr  ";" ;
+
+token EInc ({":>"} ('>')*) ;
+token EDec ({":<"} ('<')*) ;
+
+Incr.      Stmt ::= MIdent EInc ";" ;
+
+Decr.      Stmt ::= MIdent EDec ";" ;
+
+Ret.       Stmt ::= "yeet" Expr ";" ;
+
+VRet.      Stmt ::= "yeet" ";" ;
+
+Cond.      Stmt ::= "mom" "can" "we" "have" "(" Expr ")" "at" "home" "{" [Stmt] "}"  ;
+
+CondElse.  Stmt ::= "mom" "can" "we" "have" "(" Expr ")" "at" "home" "{" [Stmt] "}" "we" "already" "have" "it" "at" "home" "{" [Stmt] "}"  ;
+CondElIf.  Stmt ::= "mom" "can" "we" "have" "(" Expr ")" "at" "home" "{" [Stmt] "}" "or" "maybe" "(" Expr ")" "{" [Stmt] "}";
+CondElEs.  Stmt ::= "mom" "can" "we" "have" "(" Expr ")" "at" "home" "{" [Stmt] "}" "or" "maybe" "(" Expr ")" "{" [Stmt] "}" "we" "already" "have" "it" "at" "home" "{" [Stmt] "}"  ;
+
+While.     Stmt ::= "never" "gonna" "give" "(" Expr ")" "up" "{" [Stmt] "}" ;
+
+EBreak.     Stmt ::= "enough" ";" ;
+EContinue.  Stmt ::= "yes" "please" ";" ;
+
+SExp.      Stmt ::= Expr  ";" ;
+
+
+
+-- Expressions ---------------------------------------------
+
+EVar.      Expr6 ::= MIdent ;
+
+ELitInt.   Expr6 ::= Numb ;
+
+ELitTrue.  Expr6 ::= "^^" ;
+
+ELitFalse. Expr6 ::= "v.v" ;
+
+EApp.      Expr6 ::= MIdent "(" [Expr] ")" ;
+
+EIdx.      Expr6 ::= MIdent "[" Expr "]" ;
+
+EString.   Expr6 ::= String ;
+
+-- Anonymous
+EAnon.     Expr6 ::= "[" [Arg] "$" [Stmt] "]";
+
+Neg.       Expr5 ::= "negga" Expr6 ;
+
+Not.       Expr5 ::= "sorry" Expr6 ;
+
+EMul.      Expr4 ::= Expr4 MulOp Expr5 ;
+
+EAdd.      Expr3 ::= Expr3 AddOp Expr4 ;
+
+ERel.      Expr2 ::= Expr2 RelOp Expr3 ;
+
+EAnd.      Expr1 ::= Expr2 ":+" Expr1 ;
+
+EOr.       Expr ::= Expr1 ":o" Expr ;
+
+coercions  Expr 6 ;
+
+separator  Expr "," ;
+
+-- operators -----------------------------------------------
+
+Plus.      AddOp ::= "+.+" ;
+
+Minus.     AddOp ::= "-.-" ;
+
+Times.     MulOp ::= "*.*" ;
+
+Div.       MulOp ::= ":/" ;
+
+
+LTH.       RelOp ::= "d:" ;
+
+LE.        RelOp ::= "d=" ;
+
+GTH.       RelOp ::= ":p" ;
+
+GE.        RelOp ::= "=p" ;
+
+EQU.       RelOp ::= "rel" ;
+
+NE.        RelOp ::= "not rel" ;
+
+-- comments ------------------------------------------------
+
+comment    "btw" "<3" ;
+

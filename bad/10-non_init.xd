@@ -1,0 +1,16 @@
+btw error: non initialized value; stopped execution <3
+meh NON_INIT := [ $
+    | int INITIALIZED xD |
+    | int NON_INITIALIZED |
+    | int ASSIGN (INITIALIZED +.+ NON_INITIALIZED) |
+
+    FLEX_INT(ASSIGN);
+]
+
+int MAIN := [ $
+    NON_INIT() ;
+
+    FLEX_STR("Not printed") ;
+    
+    yeet xD ;
+]

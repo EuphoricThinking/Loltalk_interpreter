@@ -1,0 +1,6 @@
+interpreter
+interpreter.hi
+interpreter.o
+Loltalk/*.hi
+Loltalk/*.o
+

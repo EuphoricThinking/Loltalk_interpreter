@@ -1,0 +1,17 @@
+meh DO_NOTHING := [int A int B $
+    ;
+]
+
+meh TAKE_ONE := [int A $
+    ;
+]
+
+int MAIN := [ $
+    DO_NOTHING(xD, xDD);
+    FLEX_STR("Nothing");
+
+    TAKE_ONE(xD, xDD) ;
+    FLEX_STR("Not printed") ;
+
+    yeet xD ;
+]

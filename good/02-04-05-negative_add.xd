@@ -1,0 +1,15 @@
+int MAIN := [ $
+    | int 1 xxD | btw -1 <3
+    | int 2 xxxD | btw -2 <3
+
+    FLEX_INT(1 -.- 2) ;
+    FLEX_INT(1);
+    FLEX_INT(negga 2) ;
+
+    | bool BE_TRUE ^^ |
+    never gonna give (sorry BE_TRUE) up {
+        FLEX_STR("If not true, but its true") ;
+    }
+
+    FLEX_STR("Only string printed") ;
+]

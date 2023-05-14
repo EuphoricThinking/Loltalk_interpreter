@@ -1,0 +1,12 @@
+btw error: zero division; stopped execution <3
+meh ZERO_DIV := [ $
+    | int SOME_NUM xDD | btw SOME_NUM == 1 <3
+
+    SOME_NUM :/ xD ;
+]
+
+int MAIN := [ $
+    ZERO_DIV() ;
+
+    yeet xD ;
+]

@@ -1,0 +1,70 @@
+btw covered requirements:
+- declaration with and without initialization
+- reassignment, assignment
+- pass by value or variable
+- while, if..else, if..elif..else
+- function declaration: void and returning a value
+- function with arguments or without arguments
+- =, !=, <=, >=, multiply
+- print int, bool, str
+- comments
+- negative numbers, zero, positive numbers
+- three data types
+- literals
+<3
+
+| int NUM_VICTIMS xD |
+| bool PLANE_CRASH v.v |
+| str HEADLINE |
+
+btw void function; KILLED is passed by variable, IS_RESCUE_NEEDED - by value <3
+meh RESCUE_OPERATION := [ &int KILLED bool IS_RESCUE_NEEDED $
+                        btw while <3
+                        FLEX_STR(KILLED);
+                        never gonna give (IS_RESCUE_NEEDED) up {
+                            btw if (KILLED == 0) <3
+                            mom can we have (KILLED rel xD) at home {
+                               KILLED := KILLED +.+ xDD ;
+                               btw KILLED :>> ; <3   btw KILLED += 2 <3
+                            }
+                            btw elif (KILLED <= 4) <3
+                            or maybe (KILLED d= xDDDDD) {
+                                KILLED := KILLED *.* xDDD ; btw KILLED *= 2 <3
+                            }
+                            btw else <3
+                            we already have it at home {
+                                IS_RESCUE_NEEDED := v.v ; btw IS_RESCUE_NEEDED = False <3
+                            }
+                        }
+                        ]
+
+int RESURRECTION := [ $ ; ]
+
+int MAIN := [ $
+    HEADLINE := "The number of victims: " ;
+    PLANE_CRASH := ^^ ; btw set True <3
+
+    FLEX_STR(HEADLINE) ; btw print(HEADLINE) <3
+    FLEX_INT(NUM_VICTIMS) ; btw should print 0 <3
+    FLEX_BOOL(PLANE_CRASH) ; btw True <3
+
+
+    RESCUE_OPERATION(NUM_VICTIMS, PLANE_CRASH) ;
+
+    FLEX_STR(HEADLINE) ; btw print(HEADLINE) <3
+    FLEX_INT(NUM_VICTIMS) ; btw should print 8 <3
+    FLEX_BOOL(PLANE_CRASH) ; btw True, since passed by value <3
+    
+    btw if <3
+    mom can we have (PLANE_CRASH) at home {
+        FLEX_STR("We have passed by value") ;
+    }
+    btw else <3
+    we already have it at home {
+        FLEX_STR("Never printed") ;
+    }
+
+    RESURRECTION() ;
+
+    yeet xD ;
+]

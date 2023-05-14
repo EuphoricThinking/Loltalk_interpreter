@@ -1,0 +1,96 @@
+btw presented:
+- recurrence;
+- arithmetic operations;
+- comparisons;
+<3
+
+btw recursively subtracts one from CONTROL and adds one to ACCUM <3
+int RECURRENCE := [ int CONTROL int ACCUM $
+    FLEX_INT(CONTROL);
+    FLEX_INT(ACCUM) ;
+    mom can we have (CONTROL =p xDD) at home {  btw control >= 1 <3
+        yeet RECURRENCE((CONTROL -.- xDD), (ACCUM +.+ xDD)) ;
+    }
+    we already have it at home {
+        yeet ACCUM ;
+    }
+]
+
+int ARITHM_PLAYGROUND := [ $
+    | int 1 xDD |  btw 1 <3
+    | int 2 xDDD | btw 2 <3
+    | int RES |
+
+    RES := (1 +.+ 2) ;
+    FLEX_INT(RES) ; btw 3 <3
+
+    RES := (1 *.* 2) ;
+    FLEX_INT(RES) ; btw 2 <3
+
+    btw 1 :>>> ; <3 btw == 4 <3
+    1 := 1 +.+ xDDDD ; btw == 4 <3
+    2 := (1 :/ xDDDDD) ; btw 4 / 4 <3
+    FLEX_INT(1) ;
+    FLEX_INT(2) ; btw 1 <3
+
+    RES := (2 -.- 1 +.+ xDD) ; btw 1 - 4 + 1 <3
+    FLEX_INT(RES);
+
+    mom can we have (RES rel xxxD) at home {
+        btw RES == -2 <3
+        FLEX_STR("Good") ;
+    }
+
+    mom can we have (RES d: xD) at home {
+        btw RES < 0 <3
+        FLEX_STR("Negative") ;
+    }
+
+    mom can we have (RES :p xxxxxD) at home {
+        btw RES > -4 <3
+        FLEX_STR("Greater than -4") ;
+    }
+
+   btw RES :< ; <3 btw -3 <3
+    RES := RES -.- xDD;
+
+    yeet RES ; 
+]
+
+meh RECUR_VOID := [ &int CHANGER int DIF $
+    btw CHANGER > 0 <3
+    FLEX_STR("Entering");
+    FLEX_INT(CHANGER) ;
+    mom can we have (CHANGER :p xD) at home {
+        CHANGER := CHANGER -.- DIF ;
+        RECUR_VOID(CHANGER, DIF) ;
+        FLEX_STR("Leaving (come back)");
+        FLEX_INT(CHANGER) ;
+    }
+    FLEX_STR("After if: ") ;
+    FLEX_INT(CHANGER) ;
+    FLEX_INT(DIF);
+]
+
+int MAIN := [ $
+    | int RES |
+    RES := ARITHM_PLAYGROUND() ;
+    FLEX_INT(RES);
+    | int 7 |
+    7 := RECURRENCE(xDDDD, RES) ;
+    FLEX_STR("Recurrence result for 7: ") ;
+    FLEX_INT(7) ; btw 0 <3
+
+    | int TO_CHANGE xDDDDDDD | btw 6 <3
+    | int TO_DIF xDDD | btw 2 <3
+
+    FLEX_STR("The first passed by reference, the second passed by value:") ;
+    FLEX_INT(TO_CHANGE, TO_DIF) ;
+
+    RECUR_VOID(TO_CHANGE, TO_DIF);
+    
+    FLEX_STR("Passed by reference and value: ");
+    FLEX_INT(TO_CHANGE, TO_DIF);
+
+    yeet xD ;
+]

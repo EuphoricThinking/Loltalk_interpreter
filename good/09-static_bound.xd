@@ -1,0 +1,21 @@
+| int X xDD | btw 1 <3
+
+btw Based on published examples <3
+meh GLOBAL := [ $
+    X := (X +.+ xDD) ; btw 2 <3
+    FLEX_INT(X) ;
+]
+
+meh LOCAL := [ $
+    | int X xDDDD | btw 3 <3
+    GLOBAL() ;
+    FLEX_INT(X) ; btw 3 <3
+]
+
+int MAIN := [ $
+    FLEX_INT(X) ; btw 1 <3
+    LOCAL() ;
+    FLEX_INT(X) ; btw 2 <3
+
+    yeet xD ;
+]

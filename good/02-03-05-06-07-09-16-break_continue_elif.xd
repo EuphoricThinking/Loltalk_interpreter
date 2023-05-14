@@ -1,0 +1,41 @@
+| int GLOBAL xDDD | btw 2 <3
+
+btw comments calculated for for WALTER=2, JESSE=1 <3
+
+meh BREAKING_BAD := [ int WALTER &int JESSE $
+    FLEX_INT(WALTER, JESSE) ; btw 2, 1 <3 
+    | int CANCER JESSE |
+    FLEX_INT(CANCER) ;  btw 1 <3
+
+    btw GLOBAL >= 0; GLOBAL does not change inside the loop <3
+    never gonna give (GLOBAL =p xD) up {
+        btw if WALTER <= 5 <3
+        mom can we have (WALTER d= xDDDDDD) at home {
+            WALTER := WALTER +.+ CANCER; 
+            FLEX_INT(WALTER); btw 3, 4, 5, 6 <3
+            yes please ; btw continue <3
+        }
+        btw elif JESSE != GLOBAL <3
+        or maybe (JESSE not rel GLOBAL) {
+            JESSE := JESSE +.+ WALTER ; btw 7 <3
+            enough ; btw break <3
+        }
+
+    }
+
+    FLEX_STR("After:") ;
+    FLEX_INT(CANCER); btw 1 <3
+    GLOBAL := GLOBAL +.+ xDD ; btw 3 <3
+]
+
+int MAIN := [ $
+    FLEX_INT(GLOBAL); btw 2 <3
+
+    | int BY_REF xDD | btw 1 <3
+    BREAKING_BAD(xDDD, BY_REF) ; btw 2, 1 <3
+
+    FLEX_INT(BY_REF); btw 7 <3
+    FLEX_INT(GLOBAL) ; btw 3 <3
+
+    yeet xD;
+]

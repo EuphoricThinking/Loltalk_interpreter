@@ -1,0 +1,36 @@
+bool BOOL_RET := [ $
+    yeet v.v ; btw return false <3
+
+]
+
+str STR_RET := [ $
+    yeet "good enough" ;
+]
+
+int INT_RET := [int TO_ADD $
+    yeet (TO_ADD -.- xDDD) ; btw TO_ADD -2 <3
+]
+
+meh DISPLAY := [ $
+    FLEX_STR("Only to be seen") ;
+]
+
+int MAIN := [ $
+    | bool RES_BOOL BOOL_RET() |
+    | str RES_STR STR_RET() |
+    | int RES_INT INT_RET(xDDDDD) |
+
+    DISPLAY();
+
+    FLEX_INT(RES_INT) ;
+    FLEX_BOOL(RES_BOOL) ;
+    FLEX_STR(RES_STR) ;
+
+    RES_INT := negga RES_INT;
+    RES_BOOL := sorry RES_BOOL ;
+
+    FLEX_INT(RES_INT);
+    FLEX_BOOL(RES_BOOL);
+
+    yeet xD;
+]
