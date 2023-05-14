@@ -158,18 +158,18 @@ getValue (x : xs) val
   | x == 'x' = getValue xs (val - 1)
   | otherwise = getValue xs (val + 1)
 
-getLocFromEnv name = do
+getLocFromEnv (Just a) name = do
     var_loc <- asks (Map.lookup name)
     case var_loc of
-      Nothing -> throwError $ "Nieznany identyfikator: " ++ name
+      Nothing -> throwError $ "Wiersz, kolumna: " ++ show a ++ " Nieznany identyfikator: " ++ name
       Just res -> return res
 
-getValFromStore name = do
-    loc <- getLocFromEnv name
+getValFromStore (Just a) name = do
+    loc <- getLocFromEnv (Just a) name
     var_val <- gets (Map.lookup loc . store) 
     case var_val of
-      Nothing -> throwError $ "Brak wartości zmiennej: " ++ name
-      Just NonInitV -> throwError $ "Niezainizjalizowana zmienna: " ++ name
+      Nothing -> throwError $ "Wiersz, kolumna: " ++ show a ++ " Brak wartości zmiennej: " ++ name
+      Just NonInitV -> throwError $ "Wiersz, kolumna: " ++ show a ++ " Niezainizjalizowana zmienna: " ++ name
       Just res -> return res
 
 checkIfStringsEqual :: String -> String -> Bool
@@ -198,28 +198,28 @@ getVariableIdent funcName var = do
 getArgLocation :: Expr -> InterpreterMonad Loc
 getArgLocation arg = do
     case arg of
-        (EVar a (MIdent name)) -> getLocFromEnv name
+        (EVar a (MIdent name)) -> getLocFromEnv a name
         _ -> return 0
 
-insertArgsToEnv _ [] [] _ = do 
+insertArgsToEnv _ _ [] [] _ = do 
   updatedEnv <- ask
   return updatedEnv
 
-insertArgsToEnv name [] _ _ = throwError $ "Too few arguments: " ++ name
-insertArgsToEnv name _ [] _ = throwError $ "Too many arguments: " ++ name
+insertArgsToEnv (Just a) name [] _ _ = throwError $ "Row, col: " ++ show a ++ " Too few arguments: " ++ name
+insertArgsToEnv (Just a) name _ [] _ = throwError $ "Row, col: " ++ show a ++ " Too many arguments: " ++ name
 
 -- without reference
-insertArgsToEnv name (arg_val : rest_vals) ((Arg pos argType (MIdent argName)) : rest_args) (al : passedLocs) = do --funcEnv = do
+insertArgsToEnv posF name (arg_val : rest_vals) ((Arg pos argType (MIdent argName)) : rest_args) (al : passedLocs) = do --funcEnv = do
     new_loc <- alloc
     insertToStore arg_val new_loc
 
-    local (Map.insert argName new_loc) (insertArgsToEnv name rest_vals rest_args passedLocs)
+    local (Map.insert argName new_loc) (insertArgsToEnv posF name rest_vals rest_args passedLocs)
 
 -- with reference
-insertArgsToEnv name (arg_val : rest_vals) ((ArgRef pos argType (MIdent argName)) : rest_args) (argLoc : passedLocs) = do --funcEnv = do
+insertArgsToEnv posF name (arg_val : rest_vals) ((ArgRef pos argType (MIdent argName)) : rest_args) (argLoc : passedLocs) = do --funcEnv = do
     insertToStore arg_val argLoc
 
-    local (Map.insert argName argLoc) (insertArgsToEnv name rest_vals rest_args passedLocs)
+    local (Map.insert argName argLoc) (insertArgsToEnv posF name rest_vals rest_args passedLocs)
 
 getFuncEnv (FnDefV _ _ funcEnv) = funcEnv
 getFuncArgs (FnDefV funcArgs _ _) = funcArgs
@@ -270,7 +270,7 @@ eval (ELitFalse pos) = do
 eval (EString pos content) = do
     return $ StringV content
 
-eval (EVar pos (MIdent name)) = getValFromStore name
+eval (EVar pos (MIdent name)) = getValFromStore pos name
 
 eval (EApp pos (MIdent name) args) = do
   -- current environment - from the moment of the function call
@@ -290,12 +290,12 @@ eval (EApp pos (MIdent name) args) = do
         FnDefRetV [Arg] [Stmt] Env 
         At this moment the program will handle the first one
         -}
-      funcData <- getValFromStore name
+      funcData <- getValFromStore pos name
       let funcEnv = getFuncEnv funcData
       let funcArgs = getFuncArgs funcData
       let funcBody = getFuncBody funcData
 
-      updatedFuncEnv <- local (const funcEnv) (insertArgsToEnv name evaluated_args funcArgs argsLocations)
+      updatedFuncEnv <- local (const funcEnv) (insertArgsToEnv pos name evaluated_args funcArgs argsLocations)
 
       local (const updatedFuncEnv) (exec funcBody)
 
@@ -309,13 +309,13 @@ eval (Not pos expr) = do
 
 eval (EMul pos expr1 (Times posT) expr2) = exprMathFuncApply (*) expr1 expr2
 
-eval (EMul pos expr1 (Div posD) expr2) = do
+eval (EMul (Just a) expr1 (Div posD) expr2) = do
     expr2Val <- eval expr2
     let intVal2 = getIntFromValue expr2Val
 
     if (intVal2 == 0)
     then
-        throwError "Dzielenie przez zero"
+        throwError $ "Wiersz, kolumna: " ++ show a ++ " Dzielenie przez zero"
     else
       do
         expr1Val <- eval expr1
@@ -384,7 +384,7 @@ exec ((Ret pos expr) : rest) =  eval expr >>= return;
 exec ((VRet pos) : rest) = return VoidV
 
 exec ((Ass pos (MIdent ident) expr) : rest) = do
-    var_loc <- getLocFromEnv ident
+    var_loc <- getLocFromEnv pos ident
     var_val <- eval expr
     insertToStore var_val var_loc
 
